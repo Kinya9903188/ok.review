@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>レビュー評価</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .stars {
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>この店舗を評価してください</h2>
+    <div class="stars">
+        ★★★★★
+    </div>
+    <p id="rating-text">星をクリックして評価してください</p>
+    
+    <script>
+        const starsDiv = document.querySelector(".stars");
+        const ratingText = document.getElementById("rating-text");
+        
+        starsDiv.addEventListener("click", function(event) {
+            if (!event.target.textContent.includes("★")) return;
+            
+            let rating = event.target.textContent.length;
+            ratingText.textContent = `あなたの評価: ${rating} / 5`;
+            
+            // ここに適切なURLを設定してください
+            const googleReviewUrl = "https://g.page/your-google-review-url";
+            const feedbackFormUrl = "https://your-feedback-form.com";
+            
+            setTimeout(() => {
+                if (rating >= 4) {
+                    window.location.href = googleReviewUrl;
+                } else {
+                    window.location.href = feedbackFormUrl;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
