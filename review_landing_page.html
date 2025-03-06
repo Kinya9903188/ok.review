@@ -18,32 +18,27 @@
 </head>
 <body>
     <h2>この店舗を評価してください</h2>
-    <div class="stars">
-        ★★★★★
-    </div>
+    <div id="stars" class="stars">★★★★★</div>
     <p id="rating-text">星をクリックして評価してください</p>
     
     <script>
-        const starsDiv = document.querySelector(".stars");
-        const ratingText = document.getElementById("rating-text");
-        
-        starsDiv.addEventListener("click", function(event) {
-            if (!event.target.textContent.includes("★")) return;
-            
-            let rating = event.target.textContent.length;
-            ratingText.textContent = `あなたの評価: ${rating} / 5`;
-            
-            // ここに適切なURLを設定してください
-            const googleReviewUrl = "https://www.google.com/search?q=ok+%E3%82%AB%E3%83%A9%E3%82%AA%E3%82%B1+%E6%96%B0%E6%A4%9C%E8%A6%8B%E5%B7%9D&oq=ok+&gs_lcrp=EgZjaHJvbWUqCAgBEEUYJxg7MgcIABAAGI8CMggIARBFGCcYOzIGCAIQRRg7MgYIAxBFGDwyBggEEEUYPDIGCAUQRRg8MgYIBhBFGEEyBggHEEUYPNIBCDMwNDNqMWo3qAIAsAIA&sourceid=chrome&ie=UTF-8#lrd=0x6022832abe40bb4b:0x466bb98d63e798a5,3,,,,";
-            const feedbackFormUrl = "https://docs.google.com/forms/d/1tLbhtKKFIiynTG2_bHiaWNBvtvGNgF3CTQf2c67QV-I/viewform?edit_requested=true";
-            
-            setTimeout(() => {
-                if (rating >= 4) {
-                    window.location.href = googleReviewUrl;
-                } else {
-                    window.location.href = feedbackFormUrl;
-                }
-            }, 1000);
+        document.addEventListener("DOMContentLoaded", function () {
+            const starsDiv = document.getElementById("stars");
+            const ratingText = document.getElementById("rating-text");
+
+            starsDiv.addEventListener("click", function (event) {
+                if (!event.target.textContent.includes("★")) return;
+                
+                let rating = event.target.textContent.length;
+                ratingText.textContent = `あなたの評価: ${rating} / 5`;
+                
+                const googleReviewUrl = "https://www.google.com/search?q=ok+%E3%82%AB%E3%83%A9%E3%82%AA%E3%82%B1+%E6%96%B0%E6%A4%9C%E8%A6%8B%E5%B7%9D&oq=ok+&gs_lcrp=EgZjaHJvbWUqCAgBEEUYJxg7MgcIABAAGI8CMggIARBFGCcYOzIGCAIQRRg7MgYIAxBFGDwyBggEEEUYPDIGCAUQRRg8MgYIBhBFGEEyBggHEEUYPNIBCDMwNDNqMWo3qAIAsAIA&sourceid=chrome&ie=UTF-8#lrd=0x6022832abe40bb4b:0x466bb98d63e798a5,3,,,";
+                const feedbackFormUrl = "https://docs.google.com/forms/d/1tLbhtKKFIiynTG2_bHiaWNBvtvGNgF3CTQf2c67QV-I/viewform?edit_requested=true";
+                
+                setTimeout(() => {
+                    window.location.href = rating >= 4 ? googleReviewUrl : feedbackFormUrl;
+                }, 1000);
+            });
         });
     </script>
 </body>
