@@ -17,6 +17,20 @@
         .star {
             display: inline-block;
             padding: 10px;
+            font-size: 40px;
+            color: transparent;
+            -webkit-text-stroke: 1px black;
+        }
+        .star.selected {
+            color: gold;
+            -webkit-text-stroke: 0px;
+        }
+        #confirm-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
         }
     </style>
 </head>
@@ -30,28 +44,41 @@
         <span class="star" data-value="5">★</span>
     </div>
     <p id="rating-text">星をクリックして評価してください</p>
+    <button id="confirm-btn">確定</button>
     
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const stars = document.querySelectorAll(".star");
             const ratingText = document.getElementById("rating-text");
+            const confirmBtn = document.getElementById("confirm-btn");
+            let selectedRating = 0;
 
             stars.forEach(star => {
                 star.addEventListener("click", function () {
-                    let rating = parseInt(this.getAttribute("data-value"));
-                    ratingText.textContent = `あなたの評価: ${rating} / 5`;
+                    selectedRating = parseInt(this.getAttribute("data-value"));
+                    ratingText.textContent = `あなたの評価: ${selectedRating} / 5`;
+                    confirmBtn.style.display = "block";
                     
-                    const googleReviewUrl = "https://www.google.com/search?q=ok+%E3%82%AB%E3%83%A9%E3%82%AA%E3%82%B1+%E6%96%B0%E6%A4%9C%E8%A6%8B%E5%B7%9D&oq=ok+&gs_lcrp=EgZjaHJvbWUqCAgBEEUYJxg7MgcIABAAGI8CMggIARBFGCcYOzIGCAIQRRg7MgYIAxBFGDwyBggEEEUYPDIGCAUQRRg8MgYIBhBFGEEyBggHEEUYPNIBCDMwNDNqMWo3qAIAsAIA&sourceid=chrome&ie=UTF-8#lrd=0x6022832abe40bb4b:0x466bb98d63e798a5,3,,,";
-                    const feedbackFormUrl = "https://docs.google.com/forms/d/1tLbhtKKFIiynTG2_bHiaWNBvtvGNgF3CTQf2c67QV-I/viewform?edit_requested=true";
-                    
-                    setTimeout(() => {
-                        if (rating <= 3) {
-                            window.location.href = feedbackFormUrl;
-                        } else {
-                            window.location.href = googleReviewUrl;
-                        }
-                    }, 1000);
+                    stars.forEach(s => s.classList.remove("selected"));
+                    for (let i = 0; i < selectedRating; i++) {
+                        stars[i].classList.add("selected");
+                    }
                 });
+            });
+
+            confirmBtn.addEventListener("click", function () {
+                if (selectedRating === 0) return;
+                
+                const googleReviewUrl = "https://www.google.com/search?q=ok+%E3%82%AB%E3%83%A9%E3%82%AA%E3%82%B1+%E6%96%B0%E6%A4%9C%E8%A6%8B%E5%B7%9D&oq=ok+&gs_lcrp=EgZjaHJvbWUqCAgBEEUYJxg7MgcIABAAGI8CMggIARBFGCcYOzIGCAIQRRg7MgYIAxBFGDwyBggEEEUYPDIGCAUQRRg8MgYIBhBFGEEyBggHEEUYPNIBCDMwNDNqMWo3qAIAsAIA&sourceid=chrome&ie=UTF-8#lrd=0x6022832abe40bb4b:0x466bb98d63e798a5,3,,,";
+                const feedbackFormUrl = "https://docs.google.com/forms/d/1tLbhtKKFIiynTG2_bHiaWNBvtvGNgF3CTQf2c67QV-I/viewform?edit_requested=true";
+                
+                setTimeout(() => {
+                    if (selectedRating <= 3) {
+                        window.location.href = feedbackFormUrl;
+                    } else {
+                        window.location.href = googleReviewUrl;
+                    }
+                }, 500);
             });
         });
     </script>
