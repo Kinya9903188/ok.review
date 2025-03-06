@@ -11,15 +11,16 @@
             margin: 50px;
         }
         .stars {
-            font-size: 30px;
-            cursor: pointer;
+            font-size: 0;
+            display: inline-block;
         }
         .star {
             display: inline-block;
-            padding: 10px;
-            font-size: 40px;
+            padding: 5px;
+            font-size: 35px;
             color: transparent;
             -webkit-text-stroke: 1px black;
+            cursor: pointer;
         }
         .star.selected {
             color: gold;
@@ -31,12 +32,15 @@
             font-size: 16px;
             cursor: pointer;
             display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
     </style>
 </head>
 <body>
     <h2>OK!カラオケ新検見川店を評価してください</h2>
-    <div id="stars">
+    <div id="stars" class="stars">
         <span class="star" data-value="1">★</span>
         <span class="star" data-value="2">★</span>
         <span class="star" data-value="3">★</span>
